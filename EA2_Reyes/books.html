@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Book Page</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>Book Selection</h1>
+    <nav>
+      <a href="index.html">Home Page</a>
+      <a href="cart.html">Cart Page</a>
+    </nav>
+  </header>
+
+  <section>
+    <div class="books-container">
+      <h2 class="books-title">Available Books</h2>
+      <div class="book-list">
+        <div class="book-card">
+          <img src="https://a.wattpad.com/cover/17016805-368-k577307.jpg" alt="Alphabet of Death" class="book-img">
+          <div class="book-info">
+            <h4>Alphabet of Death</h4>
+            <p class="author">by John Reni De Castro</p>
+            <p class="desc">A thrilling Wattpad story that explores the mysteries and dangers behind every letter. A must-read for suspense lovers.</p>
+            <div class="book-meta">
+              <span class="price">₱2,200</span>
+              <button onclick="addToCartFromCard('Alphabet of Death', 2200)" class="add-btn">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+        <div class="book-card">
+          <img src="https://img.wattpad.com/cover/7017775-256-k726753.jpg" alt="My Husband is a Mafia Boss" class="book-img">
+          <div class="book-info">
+            <h4>My Husband is a Mafia Boss</h4>
+            <p class="author">by Yanalovesyou</p>
+            <p class="desc">The viral romance that swept Wattpad! Dive into a world of love, danger, and mafia intrigue.</p>
+            <div class="book-meta">
+              <span class="price">₱1,000</span>
+              <button onclick="addToCartFromCard('My Husband is a Mafia Boss', 1000)" class="add-btn">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+        <div class="book-card">
+          <img src="https://cdn2.penguin.com.au/covers/original/9780241476178.jpg" alt="The Inheritance Games" class="book-img">
+          <div class="book-info">
+            <h4>The Inheritance Games</h4>
+            <p class="author">by Jennifer Lynn Barnes</p>
+            <p class="desc">A bestselling YA mystery about puzzles, secrets, and a life-changing inheritance. Perfect for fans of twists and turns.</p>
+            <div class="book-meta">
+              <span class="price">₱1,500</span>
+              <button onclick="addToCartFromCard('The Inheritance Games', 1500)" class="add-btn">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
