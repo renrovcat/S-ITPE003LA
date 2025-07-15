@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Belle's Book Nook</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display&display=swap');
+
+    body {
+      font-family: 'Georgia', serif;
+      background: linear-gradient(135deg, #fff4d1 0%, #f8e6c4 100%);
+      color: #3a2e2a;
+      margin: 0;
+      padding: 0;
+      background-image: url('https://garden.spoonflower.com/c/8231001/p/f/m/8_CgL4KJyGyUIRRgECOWpq8bZCrryaBi9a1WmrugVuptiscfaxA/Belle%20Park.jpg');
+      background-repeat: repeat;
+      background-size: 120px 120px;
+    }
+
+    header {
+      background-color: #2b2d6f; 
+      color: #f7ce65; 
+      padding: 25px 20px;
+      text-align: center;
+      font-family: 'Great Vibes', cursive;
+      font-size: 3rem;
+      text-shadow: 1px 1px 4px #4b3a1a;
+      border-bottom: 5px solid #f7ce65;
+      letter-spacing: 0.06em;
+    }
+
+    nav {
+      margin-top: 10px;
+    }
+
+    nav a {
+      margin: 0 18px;
+      color: #f7ce65;
+      text-decoration: none;
+      font-weight: 600;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+      color: #d4a017;
+      text-decoration: underline;
+    }
+
+    .banner {
+      background-image: url('img/belle-library.jpg'), linear-gradient(rgba(43,45,111,0.7), rgba(43,45,111,0.7));
+      background-blend-mode: multiply;
+      background-size: cover;
+      background-position: center;
+      color: #f7ce65;
+      text-align: center;
+      padding: 90px 20px;
+      text-shadow: 2px 2px 8px #2b2d6f;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.8rem;
+      border-bottom: 3px solid #d4a017;
+    }
+
+    .banner p {
+      margin-top: 10px;
+      font-style: normal;
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: #f0e1b8;
+    }
+
+    h2.section-title {
+      text-align: center;
+      color: #2b2d6f;
+      margin-top: 60px;
+      margin-bottom: 25px;
+      font-weight: 700;
+      font-size: 2.4rem;
+      font-family: 'Playfair Display', serif;
+      letter-spacing: 0.04em;
+      text-shadow: 1px 1px 3px #e6d4a3;
+      position: relative;
+    }
+    h2.section-title::after {
+      content: "🌹";
+      margin-left: 12px;
+      font-size: 1.8rem;
+      color: #d94f4f;
+      position: relative;
+      top: 4px;
+    }
+
+    .book-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 25px;
+      padding: 0 20px 50px 20px;
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    .book-tile {
+      background-color: #fff7d6;
+      border: 3px solid #f7ce65;
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      height: 440px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 4px 8px rgba(215, 175, 70, 0.3);
+    }
+
+    .book-tile:hover {
+      transform: scale(1.08);
+      box-shadow: 0 8px 20px rgba(217, 79, 79, 0.5);
+      border-color: #d94f4f;
+    }
+
+    .book-tile img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      flex-shrink: 0;
+      border-bottom: 3px solid #f7ce65;
+    }
+
+    .book-title {
+      text-align: center;
+      padding: 14px 10px;
+      font-weight: 700;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      color: #5c3a21;
+      flex-grow: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-shadow: 1px 1px 1px #f0e6c8;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 15;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(43, 45, 111, 0.85);
+      justify-content: center;
+      align-items: center;
+      padding: 25px;
+      font-family: 'Georgia', serif;
+    }
+
+    .modal-content {
+      background-color: #fff7d6;
+      padding: 30px 30px 40px 30px;
+      border-radius: 14px;
+      max-width: 620px;
+      text-align: center;
+      position: relative;
+      overflow-y: auto;
+      max-height: 90vh;
+      box-shadow: 0 10px 30px rgba(217, 79, 79, 0.6);
+      border: 4px solid #d94f4f;
+    }
+
+    .modal-content h3 {
+      margin-top: 0;
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      color: #5c3a21;
+      text-shadow: 1px 1px 2px #e2d5a0;
+    }
+
+    .modal-content p {
+      color: #4b3a1a;
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 12px;
+      right: 18px;
+      background: #d94f4f;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      font-size: 20px;
+      cursor: pointer;
+      box-shadow: 0 0 10px #d94f4f;
+      transition: background 0.3s ease;
+    }
+
+    .close-btn:hover {
+      background: #b02b2b;
+    }
+
+    .developer-info {
+      padding: 50px 20px;
+      text-align: center;
+      font-family: 'Playfair Display', serif;
+      color: #5c3a21;
+    }
+
+    .developer-info img {
+      border-radius: 15px;
+      margin-bottom: 14px;
+      box-shadow: 0 5px 15px rgba(215, 175, 70, 0.5);
+    }
+
+    #modalFullDescription {
+      margin-top: 20px;
+      font-style: italic;
+      color: #5a472c;
+      font-size: 1.05rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    Belle's Book Nook
+    <nav>
+      <a href="home.html">Home</a>
+      <a href="book.html">Books</a>
+      <a href="cart.html">Cart</a>
+    </nav>
+  </header>
+
+  <section class="banner">
+    <h2>"I want adventure in the great wide somewhere..."</h2>
+    <p>Explore enchanting stories, just like Belle would!</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Featured Books</h2>
+    <div class="book-grid">
+      <div class="book-tile" onclick="openModal(
+        'Beauty and the Beast',
+        '₱522',
+        'Beauty and the Beast is a fairy tale written by the French novelist Gabrielle-Suzanne Barbot de Villeneuve.',
+        'After a kind-hearted young woman named Beauty sacrifices her freedom to live with a fearsome Beast, she discovers that true love is found within.' 
+      )">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Batten_-_Europa%27sFairyTales.jpg/500px-Batten_-_Europa%27sFairyTales.jpg" alt="Beauty and the Beast" />
+        <div class="book-title">Beauty and the Beast</div>
+      </div>
+
+      <div class="book-tile" onclick="openModal(
+        'Romeo and Juliet',
+        '₱727',
+        'A tragedy written by William Shakespeare about the romance between two young lovers from feuding families.',
+        'Romeo and Juliet fall in love, but their families’ hatred leads to a tragic end—and a path toward reconciliation.'
+      )">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Romeo_and_juliet_brown.jpg/500px-Romeo_and_juliet_brown.jpg" alt="Romeo and Juliet" />
+        <div class="book-title">Romeo and Juliet</div>
+      </div>
+
+      <div class="book-tile" onclick="openModal(
+        'Into the Magic Shop',
+        '₱692',
+        'A memoir by Dr. James Doty blending science, spirituality, and personal transformation.',
+        'Doty’s encounter with a wise woman as a boy teaches him mindfulness, shaping his journey to becoming a neurosurgeon.'
+      )">
+        <img src="https://cdn.kobo.com/book-images/40628c6e-57f4-4328-ac6c-588303065336/353/569/90/False/into-the-magic-shop.jpg" alt="Into the Magic Shop" />
+        <div class="book-title">Into the Magic Shop</div>
+      </div>
+
+      <div class="book-tile" onclick="openModal(
+        'Almond: A Novel',
+        '₱558',
+        'A boy born without emotions must learn to navigate tragedy, friendship, and human connection.',
+        'A touching story of growth and transformation as Yunjae explores the world of feeling and empathy.'
+      )">
+        <img src="https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1573764213l/52219386.jpg" alt="Almond: A Novel" />
+        <div class="book-title">Almond: A Novel</div>
+      </div>
+
+      <div class="book-tile" onclick="openModal(
+        'The Catcher in the Rye',
+        '₱396',
+        'Holden Caulfield wanders NYC after being expelled, reflecting on loss, childhood, and authenticity.',
+        'A coming-of-age classic grappling with grief and resistance to adulthood.'
+      )">
+        <img src="https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1398034300i/5107.jpg" alt="The Catcher in the Rye" />
+        <div class="book-title">The Catcher in the Rye</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title">Special Offers</h2>
+    <div class="book-grid">
+      <div class="book-tile" onclick="openModal(
+        'The Strength In Our Scars',
+        '₱746 (20% off!)',
+        'A memoir about facing emotional trauma and turning pain into power.',
+        'The author inspires with stories of healing, self-worth, and inner resilience.'
+      )">
+        <img src="https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1533562564i/41057388.jpg" alt="The Strength In Our Scars" />
+        <div class="book-title">The Strength In Our Scars</div>
+      </div>
+
+      <div class="book-tile" onclick="openModal(
+        'Every Word You Cannot Say',
+        '₱607 (Buy 1 Get 1 Free!)',
+        'Poetry and reflections that help express what’s hard to say.',
+        'This book offers comfort through compassion, honesty, and emotional truth.'
+      )">
+        <img src="https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1545468775i/40680983.jpg" alt="Every Word You Cannot Say" />
+        <div class="book-title">Every Word You Cannot Say</div>
+      </div>
+
+      <div class="book-tile" onclick="openModal(
+        'The Four Agreements',
+        '₱416 (Limited Time Offer)',
+        'A spiritual guide offering a code for personal freedom and peace.',
+        'Through four principles—be impeccable with your word, don’t take anything personally, etc.—this book provides profound wisdom for a fulfilling life.'
+      )">
+        <img src="https://images-na.ssl-images-amazon.com/images/I/91rR9gMuOVL.jpg" alt="The Four Agreements" />
+        <div class="book-title">The Four Agreements</div>
+      </div>
+
+      <div class="book-tile" onclick="openModal(
+        'I Decide To Live As Me',
+        '₱597 (Buy 1 Get 1 Free!)',
+        'I Decide To Live As Me is an inspiring memoir by Daniela Olszewska about embracing identity and courageously living authentically as a transgender woman.',
+        'Through her journey of self-discovery, challenges, and acceptance, Daniela offers a powerful message of hope and resilience for anyone seeking to live their truth..'
+      )">
+        <img src="https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1564565446i/44420389.jpg" alt="I Decide To Live As Me" />
+        <div class="book-title">I Decide To Live As Me</div>
+      </div>
+
+      <div class="book-tile" onclick="openModal(
+        'The Alchemist',
+        '₱340 (Limited Time Offer)',
+        'The Alchemist is a philosophical novel about a young shepherd named Santiago who embarks on a journey to find a hidden treasure near the Egyptian pyramids.',
+        'Along the way, he learns valuable lessons about listening to his heart, recognizing opportunities, and following his personal legend to fulfill his true destiny.'
+      )">
+        <img src="https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1654371463i/18144590.jpg" alt="The Alchemist" />
+        <div class="book-title">The Alchemist</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="developer-info">
+    <h3>Meet the Developer</h3>
+    <img src="img/developer.jpg" alt="Developer Photo" width="150" />
+    <p><strong>Renee' Mavis Advincula</strong></p>
+  </section>
+
+  <div id="bookModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-content">
+      <button class="close-btn" onclick="closeModal()" aria-label="Close modal">×</button>
+      <h3 id="modalTitle">Book Title</h3>
+      <p id="modalPrice">Price</p>
+      <p id="modalDescription">Summary</p>
+      <p id="modalFullDescription"></p>
+    </div>
+  </div>
+
+  <script>
+    function openModal(title, price, summary, fullDescription) {
+      document.getElementById('modalTitle').innerText = title;
+      document.getElementById('modalPrice').innerText = price;
+      document.getElementById('modalDescription').innerText = summary;
+      document.getElementById('modalFullDescription').innerText = fullDescription;
+
+      const modal = document.getElementById('bookModal');
+      modal.style.display = 'flex';
+      modal.style.justifyContent = 'center';
+      modal.style.alignItems = 'center';
+    }
+
+    function closeModal() {
+      document.getElementById('bookModal').style.display = 'none';
+    }
+
+    window.onclick = function (event) {
+      const modal = document.getElementById('bookModal');
+      if (event.target === modal) {
+        closeModal();
+      }
+    };
+
+    window.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') {
+        closeModal();
+      }
+    });
+  </script>
+</body>
+</html>

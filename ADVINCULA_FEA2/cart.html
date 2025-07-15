@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Your Cart – Belle's Book Nook</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display&display=swap');
+
+    body {
+      font-family: 'Georgia', serif;
+      background: linear-gradient(135deg, #fff4d1 0%, #f8e6c4 100%);
+      color: #3a2e2a;
+      margin: 0;
+      padding: 0;
+      background-image: url('https://garden.spoonflower.com/c/8231001/p/f/m/8_CgL4KJyGyUIRRgECOWpq8bZCrryaBi9a1WmrugVuptiscfaxA/Belle%20Park.jpg');
+      background-repeat: repeat;
+      background-size: 120px 120px;
+    }
+
+    header {
+      background-color: #2b2d6f;
+      color: #f7ce65;
+      padding: 25px 20px;
+      text-align: center;
+      font-family: 'Great Vibes', cursive;
+      font-size: 3rem;
+      text-shadow: 1px 1px 4px #4b3a1a;
+      border-bottom: 5px solid #f7ce65;
+    }
+
+    nav {
+      margin-top: 10px;
+    }
+
+    nav a {
+      margin: 0 18px;
+      color: #f7ce65;
+      text-decoration: none;
+      font-weight: 600;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+      color: #d4a017;
+      text-decoration: underline;
+    }
+
+    section {
+      max-width: 700px;
+      margin: 50px auto;
+      background-color: #fff7d6;
+      border: 4px solid #f7ce65;
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 6px 15px rgba(217, 79, 79, 0.2);
+    }
+
+    section h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      color: #2b2d6f;
+      margin-bottom: 20px;
+      text-align: center;
+      text-shadow: 1px 1px 3px #e6d4a3;
+    }
+
+    #cartItems {
+      list-style: none;
+      padding-left: 0;
+      margin-bottom: 30px;
+    }
+
+    #cartItems li {
+      padding: 12px 15px;
+      background-color: #fff4d1;
+      border: 2px solid #f7ce65;
+      border-radius: 10px;
+      margin-bottom: 12px;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      color: #4b3a1a;
+    }
+
+    button {
+      background-color: #2b2d6f;
+      color: #f7ce65;
+      font-family: 'Playfair Display', serif;
+      padding: 12px 25px;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      display: block;
+      margin: 0 auto 20px auto;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #1e1f5e;
+    }
+
+    #total {
+      text-align: center;
+      font-weight: bold;
+      font-size: 1.2rem;
+      font-family: 'Playfair Display', serif;
+      color: #5c3a21;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    Belle's Book Nook
+    <nav>
+      <a href="home.html">Home</a>
+      <a href="book.html">Books</a>
+      <a href="cart.html">Cart</a>
+    </nav>
+  </header>
+
+  <section>
+    <h3>Books in Your Cart:</h3>
+    <ul id="cartItems">
+    
+    </ul>
+    <button onclick="checkout()">Buy</button>
+    <p id="total"></p>
+  </section>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const cartList = document.getElementById('cartItems');
+      const totalElement = document.getElementById('total');
+
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+      let total = 0;
+
+      if (cart.length === 0) {
+        cartList.innerHTML = '<li>Your cart is empty.</li>';
+        totalElement.textContent = '';
+        return;
+      }
+
+      cart.forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = `${item.title} - ₱${item.price}`;
+        cartList.appendChild(li);
+        total += parseFloat(item.price);
+      });
+
+      totalElement.textContent = `Total: ₱${total.toFixed(2)}`;
+    });
+
+    function checkout() {
+      alert('Thank you for your purchase!');
+      localStorage.removeItem('cart');
+      window.location.reload();
+    }
+  </script>
+</body>
+</html>

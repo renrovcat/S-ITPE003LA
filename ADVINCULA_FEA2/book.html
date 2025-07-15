@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Choose Your Books</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display&display=swap');
+
+    body {
+      font-family: 'Georgia', serif;
+      background: linear-gradient(135deg, #fff4d1 0%, #f8e6c4 100%);
+      color: #3a2e2a;
+      margin: 0;
+      padding: 0;
+      background-image: url('https://garden.spoonflower.com/c/8231001/p/f/m/8_CgL4KJyGyUIRRgECOWpq8bZCrryaBi9a1WmrugVuptiscfaxA/Belle%20Park.jpg');
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    header {
+      background-color: #2b2d6f;
+      color: #f7ce65;
+      padding: 30px 20px;
+      width: 100%;
+      text-align: center;
+      font-family: 'Great Vibes', cursive;
+      font-size: 3rem;
+      text-shadow: 1px 1px 4px #4b3a1a;
+      border-bottom: 5px solid #f7ce65;
+      letter-spacing: 0.06em;
+    }
+
+    nav {
+      margin-top: 12px;
+    }
+
+    nav a {
+      margin: 0 18px;
+      color: #f7ce65;
+      text-decoration: none;
+      font-weight: 600;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+      color: #d4a017;
+      text-decoration: underline;
+    }
+
+    section {
+      background-color: #fff7d6;
+      border: 3px solid #f7ce65;
+      border-radius: 14px;
+      padding: 40px 30px;
+      margin: 60px 20px;
+      width: 350px;
+      box-shadow: 0 6px 14px rgba(215, 175, 70, 0.3);
+      font-family: 'Playfair Display', serif;
+      color: #5c3a21;
+      text-align: center;
+    }
+
+    label {
+      font-size: 1.2rem;
+      display: block;
+      margin-bottom: 15px;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      text-shadow: 1px 1px 1px #f0e6c8;
+    }
+
+    select {
+      width: 100%;
+      padding: 10px 15px;
+      font-size: 1.1rem;
+      border: 2px solid #f7ce65;
+      border-radius: 8px;
+      outline: none;
+      transition: border-color 0.3s ease;
+      font-family: 'Playfair Display', serif;
+      color: #5c3a21;
+      background-color: #fffbe3;
+      box-shadow: inset 0 2px 5px rgba(215,175,70,0.15);
+      cursor: pointer;
+    }
+
+    select:hover, select:focus {
+      border-color: #d94f4f;
+      box-shadow: 0 0 8px #d94f4f;
+    }
+
+    button {
+      margin-top: 25px;
+      padding: 12px 28px;
+      background-color: #d94f4f;
+      border: none;
+      border-radius: 30px;
+      color: #fff7d6;
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 1.15rem;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(217, 79, 79, 0.6);
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #b02b2b;
+      box-shadow: 0 8px 20px rgba(176, 43, 43, 0.8);
+    }
+
+    @media (max-width: 400px) {
+      section {
+        width: 90%;
+        margin: 40px auto;
+        padding: 30px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    Choose Your Books
+    <nav>
+      <a href="home.html">Home</a>
+      <a href="cart.html">Cart</a>
+    </nav>
+  </header>
+
+  <section>
+    <label for="bookSelect">Select a Book:</label>
+    <select id="bookSelect" aria-label="Select a Book">
+      <option value="">-- Choose a Book --</option>
+      <option value="Beauty and the Beast|522">Beauty and the Beast - ₱522</option>
+      <option value="Romeo and Juliet|727">Romeo and Juliet - ₱727</option>
+      <option value="Into the Magic Shop|692">Into the Magic Shop - ₱692</option>
+      <option value="Almond: A Novel|558">Almond: A Novel - ₱558</option>
+      <option value="The Catcher in the Rye|396">The Catcher in the Rye - ₱396</option>
+      <option value="The Strength In Our Scars|746">The Strength In Our Scars - ₱746</option>
+      <option value="Every Word You Cannot Say|607">Every Word You Cannot Say - ₱607</option>
+      <option value="The Four Agreements|416">The Four Agreements - ₱416</option>
+      <option value="I Decide To Live As Me|597">I Decide To Live As Me - ₱597</option>
+      <option value="The Alchemist|340">The Alchemist - ₱340</option>
+    </select>
+    <button onclick="addToCart()">Add to Cart</button>
+  </section>
+
+  <script>
+  function addToCart() {
+    const select = document.getElementById('bookSelect');
+    const value = select.value;
+    if (!value) {
+      alert('Please select a book before adding to cart.');
+      return;
+    }
+
+    const [title, price] = value.split('|');
+
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    cart.push({ title, price });
+
+    localStorage.setItem('cart', JSON.stringify(cart));
+
+    alert(`Added "${title}" priced at ₱${price} to your cart!`);
+  }
+</script>
+
+</body>
+</html>
