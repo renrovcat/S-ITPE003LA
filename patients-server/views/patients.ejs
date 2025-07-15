@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Patients List</title>
+  <style>
+    body { font-family: Arial; background: #f4f4f9; }
+    table { margin: 40px auto; border-collapse: collapse; width: 60%; }
+    th, td { padding: 12px 20px; border: 1px solid #ccc; }
+    th { background: #2193b0; color: #fff; }
+    tr:nth-child(even) { background: #eaf6fb; }
+    h1 { text-align: center; color: #2193b0; }
+  </style>
+</head>
+<body>
+  <h1>Patients List</h1>
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Age</th>
+      <th>Diagnosis</th>
+    </tr>
+    <% patients.forEach(function(patient) { %>
+      <tr>
+        <td><%= patient.name %></td>
+        <td><%= patient.age %></td>
+        <td><%= patient.diagnosis %></td>
+      </tr>
+    <% }); %>
+  </table>
+</body>
+</html>
