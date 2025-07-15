@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Store - Book Page</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            background: #f4f4f9;
+            color: #222;
+        }
+        header {
+            background: #2d3e50;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        nav {
+            margin: 20px 0 0 0;
+        }
+        nav a {
+            color: #2d3e50;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+            transition: color 0.2s;
+        }
+        nav a:hover {
+            color: #e67e22;
+        }
+        .container {
+            max-width: 500px;
+            margin: 40px auto;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+            padding: 30px 40px;
+        }
+        label, select, button {
+            font-size: 1.1em;
+        }
+        select {
+            width: 100%;
+            padding: 8px;
+            margin: 10px 0 20px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            background: #2193b0;
+            color: #fff;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        button:hover {
+            background: #17627a;
+        }
+        .cart-list {
+            margin-top: 30px;
+        }
+        .cart-list ul {
+            padding-left: 20px;
+        }
+        .cart-list li {
+            margin-bottom: 8px;
+        }
+        @media (max-width: 600px) {
+            .container { padding: 20px 10px; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Book Selection</h1>
+        <nav>
+            <a href="home.html">Home Page</a>
+            <a href="cart.html">Cart Page</a>
+        </nav>
+    </header>
+    <div class="container">
+        <form id="bookForm" onsubmit="return false;">
+            <label for="bookSelect">Choose a book to add to your cart:</label>
+            <select id="bookSelect">
+                <option value="The Great Gatsby|350">The Great Gatsby - ₱350</option>
+                <option value="1984|400">1984 - ₱400</option>
+                <option value="To Kill a Mockingbird|380">To Kill a Mockingbird - ₱380</option>
+            </select>
+            <button type="button" onclick="addToCart()">Add to Cart</button>
+        </form>
+        <div class="cart-list" id="cartList">
+            <h3>Books in Cart:</h3>
+            <ul id="cartItems"></ul>
+        </div>
+    </div>
+    <script>
+        // Load cart from localStorage
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        function addToCart() {
+            const select = document.getElementById('bookSelect');
+            const [title, price] = select.value.split('|');
+            cart.push({ title, price: parseFloat(price) });
+            localStorage.setItem('cart', JSON.stringify(cart));
+            renderCart();
+        }
+        function renderCart() {
+            const cartItems = document.getElementById('cartItems');
+            cartItems.innerHTML = '';
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<li>No books in cart.</li>';
+            } else {
+                cart.forEach((item, idx) => {
+                    cartItems.innerHTML += `<li>${item.title} - ₱${item.price.toFixed(2)}</li>`;
+                });
+            }
+        }
+        renderCart();
+    </script>
+</body>
+</html>
