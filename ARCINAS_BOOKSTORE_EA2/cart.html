@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Store - Cart Page</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            background: #f4f4f9;
+            color: #222;
+        }
+        header {
+            background: #2d3e50;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        nav {
+            margin: 20px 0 0 0;
+        }
+        nav a {
+            color: #2d3e50;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+            transition: color 0.2s;
+        }
+        nav a:hover {
+            color: #e67e22;
+        }
+        .container {
+            max-width: 500px;
+            margin: 40px auto;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+            padding: 30px 40px;
+        }
+        h2 {
+            margin-top: 0;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 8px;
+        }
+        .total {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        .buy-btn {
+            background: #e67e22;
+            color: #fff;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background 0.2s;
+        }
+        .buy-btn:hover {
+            background: #b95d0b;
+        }
+        .order-summary {
+            background: #eafbe7;
+            border-left: 5px solid #27ae60;
+            padding: 20px;
+            margin: 20px 0 0 0;
+            border-radius: 6px;
+        }
+        @media (max-width: 600px) {
+            .container { padding: 20px 10px; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Your Cart</h1>
+        <nav>
+            <a href="home.html">Home Page</a>
+            <a href="book.html">Book Page</a>
+        </nav>
+    </header>
+    <div class="container">
+        <h2>Books in Your Cart</h2>
+        <ul id="cartItems"></ul>
+        <div class="total" id="totalPrice"></div>
+        <button class="buy-btn" onclick="finalizeOrder()">Buy</button>
+        <div class="order-summary" id="orderSummary" style="display:none;"></div>
+    </div>
+    <script>
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        function renderCart() {
+            const cartItems = document.getElementById('cartItems');
+            const totalPrice = document.getElementById('totalPrice');
+            cartItems.innerHTML = '';
+            let total = 0;
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<li>No books in cart.</li>';
+                totalPrice.textContent = '';
+            } else {
+                cart.forEach(item => {
+                    cartItems.innerHTML += `<li>${item.title} - ₱${item.price.toFixed(2)}</li>`;
+                    total += item.price;
+                });
+                totalPrice.textContent = `Total: ₱${total.toFixed(2)}`;
+            }
+        }
+        function finalizeOrder() {
+            if (cart.length === 0) {
+                alert('Your cart is empty!');
+                return;
+            }
+            let summary = '<h3>Order Summary</h3><ul>';
+            let total = 0;
+            cart.forEach(item => {
+                summary += `<li>${item.title} - ₱${item.price.toFixed(2)}</li>`;
+                total += item.price;
+            });
+            summary += `</ul><strong>Total Price: ₱${total.toFixed(2)}</strong>`;
+            document.getElementById('orderSummary').innerHTML = summary;
+            document.getElementById('orderSummary').style.display = 'block';
+            // Clear cart after purchase
+            cart = [];
+            localStorage.setItem('cart', JSON.stringify(cart));
+            renderCart();
+        }
+        renderCart();
+    </script>
+</body>
+</html>
