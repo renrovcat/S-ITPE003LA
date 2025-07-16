@@ -1,31 +1,61 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Patients List</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Patient List</title>
   <style>
-    body { font-family: Arial; background: #f4f4f9; }
-    table { margin: 40px auto; border-collapse: collapse; width: 60%; }
-    th, td { padding: 12px 20px; border: 1px solid #ccc; }
-    th { background: #2193b0; color: #fff; }
-    tr:nth-child(even) { background: #eaf6fb; }
-    h1 { text-align: center; color: #2193b0; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f0f4f8;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      color: #2c3e50;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .patient-list {
+      max-width: 600px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    .patient {
+      border-bottom: 1px solid #ddd;
+      padding: 10px 0;
+      display: flex;
+      justify-content: space-between;
+    }
+    .patient:last-child {
+      border-bottom: none;
+    }
+    .name {
+      font-weight: 600;
+      color: #34495e;
+    }
+    .age, .condition {
+      color: #7f8c8d;
+    }
   </style>
 </head>
 <body>
-  <h1>Patients List</h1>
-  <table>
-    <tr>
-      <th>Name</th>
-      <th>Age</th>
-      <th>Diagnosis</th>
-    </tr>
-    <% patients.forEach(function(patient) { %>
-      <tr>
-        <td><%= patient.name %></td>
-        <td><%= patient.age %></td>
-        <td><%= patient.diagnosis %></td>
-      </tr>
-    <% }); %>
-  </table>
+  <h1>Patient List</h1>
+  <div class="patient-list">
+    <% if(patients.length === 0) { %>
+      <p>No patients found.</p>
+    <% } else { %>
+      <% patients.forEach(patient => { %>
+        <div class="patient">
+          <div class="name"><%= patient.name %></div>
+          <div class="age">Age: <%= patient.age %></div>
+          <div class="condition">Condition: <%= patient.condition %></div>
+        </div>
+      <% }) %>
+    <% } %>
+  </div>
 </body>
 </html>

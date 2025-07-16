@@ -1,35 +1,44 @@
-
 const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
+const port = 3000;
 
-app.set('view engine', 'ejs');
-app.use(express.static('public'));
+// Connect to MongoDB (replace <username>, <password>, <dbname> with your actual info)
+const mongoURI = 'mongodb://localhost:27017/patientDB'; // For local MongoDB. Change if using Atlas.
 
-// Connect to MongoDB with error handling
-mongoose.connect('mongodb://localhost:27017/patientsdb', { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('Connected to MongoDB'))
-  .catch(err => {
-    console.error('MongoDB connection error:', err);
-    process.exit(1);
-  });
+mongoose.connect(mongoURI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+.then(() => console.log('MongoDB connected'))
+.catch(err => console.log('MongoDB connection error:', err));
 
+// Define Patient schema and model
 const patientSchema = new mongoose.Schema({
   name: String,
   age: Number,
-  diagnosis: String
+  condition: String,
 });
 
 const Patient = mongoose.model('Patient', patientSchema);
 
-app.get('/', async (req, res) => {
+// Set EJS as the view engine
+app.set('view engine', 'ejs');
+
+// Serve static files (for CSS/images)
+app.use(express.static('public'));
+
+// Route to show patients
+app.get('/patients', async (req, res) => {
   try {
     const patients = await Patient.find();
-    res.render('patients', { patients });
+    res.render('patient', { patients });
   } catch (err) {
-    res.status(500).send('Error retrieving patients data.');
+    res.status(500).send('Error fetching patients');
   }
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+// Start server
+app.listen(port, () => {
+  console.log(`Server running at http://localhost:${port}/patients`);
+});
